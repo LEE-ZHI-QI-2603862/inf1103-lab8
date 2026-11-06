@@ -24,6 +24,9 @@ class Order:
 
         for order_line in self.__order_lines:
             order_line.display_information()
-            
+
         print("--------------------------------------------")
         print(f"Total: ${self.calculate_total():.2f}")
+
+    def get_order_lines(self) -> list[OrderLine]:
+        return list(self.__order_lines)

@@ -246,3 +246,6 @@ while True:
      else:
           print("Invalid option.")
 
+def show_product_details(product: Product) -> None:
+     product.display_information()
+     print(product.get_fulfilment_info())
