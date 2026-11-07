@@ -30,3 +30,15 @@ inventory.add_product(physical_product)
 inventory.add_product(digital_product)
 
 inventory.display_all()
+
+print("\n--- POLYMORPHISM TEST ---")
+
+polymorphism_inventory = Inventory()
+
+polymorphism_inventory.add_product(physical_product)
+polymorphism_inventory.add_product(digital_product)
+
+for product in polymorphism_inventory.get_products():
+    product.display_information()
+    print("Fulfilment:", product.get_fulfilment_info())
+    print()
