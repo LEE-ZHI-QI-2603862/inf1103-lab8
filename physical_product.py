@@ -6,13 +6,13 @@ from supplier import Supplier
 class PhysicalProduct(Product, CanBeShipped):
     def __init__(self, product_id: str, name: str, price: float, stock: int, weight: float, supplier: Supplier) -> None:
         super().__init__(product_id, name, price, stock, supplier)
-        self.__weight = weight
+        self.__weight: float = weight
 
     def display_information(self) -> None:
         super().display_information()
         print(f"Weight: {self.__weight} kg")
 
-    def get_fulfilment_info(self):
+    def get_fulfilment_info(self) -> str:
         return "Requires physical shipping."
 
     def calculate_shipping_cost(self) -> float:

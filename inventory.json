@@ -4,47 +4,25 @@
         "name": "Laptop",
         "price": 1200.0,
         "stock": 15,
+        "supplier": {
+            "supplier_id": "S001",
+            "name": "Tech Supplies",
+            "contact_email": "sales@tech.com"
+        },
         "type": "physical",
         "weight": 2.5
     },
     {
         "id": "P002",
-        "name": "Software",
-        "price": 99.9,
-        "stock": 45,
+        "name": "Antivirus Software",
+        "price": 59.9,
+        "stock": 30,
+        "supplier": {
+            "supplier_id": "S001",
+            "name": "Tech Supplies",
+            "contact_email": "sales@tech.com"
+        },
         "type": "digital",
-        "download_size": 1500
-    },
-    {
-        "id": "P003",
-        "name": "Wireless Mouse",
-        "price": 35.9,
-        "stock": 40,
-        "type": "physical",
-        "weight": 0.2
-    },
-    {
-        "id": "P004",
-        "name": "Photo Editing Software",
-        "price": 79.9,
-        "stock": 100,
-        "type": "digital",
-        "download_size": 2200.0
-    },
-    {
-        "id": "P005",
-        "name": "Keyboard",
-        "price": 20.0,
-        "stock": 36,
-        "type": "physical",
-        "weight": 0.5
-    },
-    {
-        "id": "P006",
-        "name": "E-sim",
-        "price": 10.0,
-        "stock": 200,
-        "type": "digital",
-        "download_size": 210.0
+        "download_size": 850.0
     }
 ]

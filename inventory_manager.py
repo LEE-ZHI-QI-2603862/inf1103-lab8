@@ -2,10 +2,12 @@ import json
 import os
 
 from inventory import Inventory
+from product import Product
+from supplier import Supplier
 from physical_product import PhysicalProduct
 from digital_product import DigitalProduct
 
-def load_inventory():
+def load_inventory() -> Inventory:
     inventory = Inventory()
 
     if os.path.exists("inventory.json"):
@@ -16,13 +18,22 @@ def load_inventory():
 
         for item in data:
 
+            supplier_data = item["supplier"]
+
+            supplier = Supplier(
+                 supplier_data["supplier_id"], 
+                 supplier_data["name"], 
+                 supplier_data["contact_email"]
+          )
+
             if item["type"] == "physical":
                  product = PhysicalProduct(
                       item["id"],
                       item["name"],
                       item["price"],
                       item["stock"],
-                      item["weight"]
+                      item["weight"],
+                      supplier
             )
             elif item["type"] == "digital":
                  product = DigitalProduct(
@@ -30,7 +41,8 @@ def load_inventory():
                       item["name"],
                       item["price"],
                       item["stock"],
-                      item["download_size"]
+                      item["download_size"],
+                      supplier
                 )
 
             inventory.add_product(product)
@@ -42,7 +54,7 @@ def load_inventory():
 
     return inventory
 
-def save_inventory(inventory):
+def save_inventory(inventory) -> None:
     data = []
 
     for product in inventory.get_products():
@@ -53,74 +65,6 @@ def save_inventory(inventory):
 
     print("Inventory saved successfully to inventory.json.")
 
-def display_all():
-     print("Current Inventory")
-     print("--------------------------------------------")
-
-     for product in inventory:
-          print(
-               f"ID: {product['id']} | "
-               f"Name: {product['name']} | "
-               f"Price: {product['price']:.2f} | "
-               f"Stock: {product['stock']}"
-          )
-     print("--------------------------------------------")
-
-def add_product():
-     print("Add New Product")
-
-     product_id = input("Product ID: ")
-     name = input("Product Name: ")
-     price = float(input("Price: "))
-     stock = int(input("Stock Quantity: "))
-
-     product = {
-          "id": product_id,
-          "name": name,
-          "price": price,
-          "stock": stock 
-     }
-
-     inventory.append(product)
-
-     print("Product added successfully!")
-
-def search_product():
-     print("Search Product")
-
-     product_id = input("Enter Product ID: ")
-
-     for product in inventory:
-          if product["id"] == product_id:
-               print("Product Found")
-               print("--------------------------------------------")
-               print("ID:", product["id"])
-               print("Name:", product["name"])
-               print(f"Price: ${product['price']:.2f}")
-               print("Stock:", product["stock"])
-               print("--------------------------------------------")
-               return
-     print("Product not found.")
-
-def update_stock():
-     print("Update Stock")
-
-     product_id = input("Enter Product ID: ")
-
-     for product in inventory:
-          if product["id"] == product_id:
-               print("Product Found:")
-               print("Name:", product["name"])
-               print("Current Stock:", product["stock"])
-
-               new_stock = int(input("New Stock Quantity: "))
-
-               product["stock"] = new_stock
-
-               print("Stock updated successfully!")
-               return
-     
-     print("Product not found.")
 
 print("========================================")
 print("INVENTORY MANAGEMENT SYSTEM")
@@ -154,7 +98,15 @@ while True:
           name = input("Product Name: ")
           price = float(input("Price: "))
           stock = int(input("Stock Quantity: "))
-          
+
+          print("\nSupplier Information")
+
+          supplier_id = input("Supplier ID: ")
+          supplier_name = input("Supplier Name: ")
+          supplier_email = input("Supplier Email:")
+
+          supplier = Supplier(supplier_id, supplier_name, supplier_email)
+
           if product_type == "1":
                weight = float(input("Weight (kg): "))
                product = PhysicalProduct(
@@ -162,7 +114,8 @@ while True:
                     name,
                     price,
                     stock,
-                    weight
+                    weight,
+                    supplier
                )
                
                inventory.add_product(product)
@@ -178,7 +131,8 @@ while True:
                     name,
                     price,
                     stock,
-                    download_size
+                    download_size,
+                    supplier
                )
                
                inventory.add_product(product)
@@ -191,7 +145,7 @@ while True:
           
           product_id = input("Enter Product ID: ")
           
-          product = inventory.search_product(product_id)
+          product = inventory.find_product(product_id)
           
           if product is not None:
                print("Product Found:")
@@ -212,7 +166,7 @@ while True:
           
           product_id = input("Enter Product ID: ")
           
-          product = inventory.search_product(product_id)
+          product = inventory.find_product(product_id)
           
           if product is not None:
                print("Product Found")
@@ -225,6 +179,8 @@ while True:
                     product.get_fulfilment_info()
                )
 
+               print("\nSupplier:")
+               product.display_supplier_information()
                
                print("--------------------------------------------")
           
@@ -246,6 +202,3 @@ while True:
      else:
           print("Invalid option.")
 
-def show_product_details(product: Product) -> None:
-     product.display_information()
-     print(product.get_fulfilment_info())

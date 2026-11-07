@@ -2,7 +2,7 @@ from product import Product
 
 class Inventory:
     def __init__(self) -> None:
-        self.__products = list[Product] = []
+        self.__products : list[Product] = []
 
     def add_product(self, product: Product) -> None:
         self.__products.append(product)

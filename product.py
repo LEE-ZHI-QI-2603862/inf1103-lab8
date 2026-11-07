@@ -36,19 +36,20 @@ class Product(ABC):
     def get_stock(self) -> int:
         return self.__stock
 
-    def get_supplier(self):
+    def get_supplier(self) -> Supplier:
             return self.__supplier
 
-    def to_dict(self) -> dict:
+    def to_dict(self) -> dict[str, object]:
         return {
             "id": self.__product_id,
             "name": self.__name,
             "price": self.__price,
-            "stock": self.__stock
+            "stock": self.__stock,
+            "supplier": self.__supplier.to_dict()
         }
 
     @abstractmethod
-    def get_fulfilment_info(self):
+    def get_fulfilment_info(self) -> str:
         pass
 
     

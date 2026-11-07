@@ -9,7 +9,7 @@ class OrderLine:
         return self.__product.get_price() * self.__quantity
 
     def display_information(self) -> None:
-        self.product.display_information()
+        self.__product.display_information()
         print(
             f"{self.__product.get_name()} "
             f"x {self.__quantity} " 
@@ -20,5 +20,5 @@ class OrderLine:
         return self.__product
 
     def get_quantity(self) -> int:
-        return self.quantity
+        return self.__quantity
 
